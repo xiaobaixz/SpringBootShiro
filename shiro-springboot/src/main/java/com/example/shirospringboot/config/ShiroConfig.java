@@ -34,10 +34,16 @@ public class ShiroConfig {
           role: 拥有某个角色权限才能访问
          */
         Map<String, String> filterMap = new LinkedHashMap<>();
+
+        //授权用到的东西，没有授权的话，系统会跳转到未授权的界面（perms[user:add]表示，带了那个字符串的用户才能访问）
+        filterMap.put("/user/add", "perms[user:add]");
+
         filterMap.put("/user/*", "authc");
         bean.setFilterChainDefinitionMap(filterMap);
 
         bean.setLoginUrl("/toLogin");
+        //未授权的界面
+        bean.setUnauthorizedUrl("/noauth");
 
         return bean;
     }
